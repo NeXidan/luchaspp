@@ -16,7 +16,7 @@ public class ProjectController {
     @Autowired
     public ProjectRepository repository;
 
-    @GetMapping("/list")
+    @GetMapping("/")
     public List list() {
          return repository.findAll();
     }
