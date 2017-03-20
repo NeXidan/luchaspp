@@ -1,3 +1,5 @@
 .idea
 .mvn
 target/
+/src/resources/application.properties
+/src/resources/hibernate.cfg.xml
