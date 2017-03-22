@@ -4,6 +4,8 @@ import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/throw';
+
 import {environment} from '../../environments/environment';
 import {Project} from './project.model';
 
@@ -31,10 +33,12 @@ export class ProjectService {
 
         if (response instanceof Response) {
             const {error = ''} = response.json() || {};
-            message = `${response.status} - ${response.statusText || ''} ${error}`;
+            message = `Error: ${response.status} - ${response.statusText || ''} ${error}`;
         } else {
             message = response.message ? response.message : response.toString();
         }
+
+        console.error(message);
 
         return Observable.throw(message);
     }
