@@ -38,8 +38,6 @@ export class ProjectService {
             message = response.message ? response.message : response.toString();
         }
 
-        console.error(message);
-
         return Observable.throw(message);
     }
 }
