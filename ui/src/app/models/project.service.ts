@@ -11,7 +11,7 @@ import {Project} from './project.model';
 
 @Injectable()
 export class ProjectService {
-    private url = environment.api.root + '/projects';
+    private url = environment.api.root + 'projects/';
 
     constructor (private http: Http) {
 
