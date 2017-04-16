@@ -5,7 +5,9 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "projects")
+@Table(name = "projects",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"name"})
+)
 public class ProjectEntity {
     private int id;
     private String name;
@@ -14,6 +16,7 @@ public class ProjectEntity {
     private Timestamp createdAt;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     public int getId() {
         return id;
