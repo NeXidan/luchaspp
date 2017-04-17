@@ -21,7 +21,7 @@ public class ProjectController extends BasicController<ProjectEntity> {
 
     @GetMapping("/")
     public List list() {
-         return repository.findAll();
+        return repository.findAll();
     }
 
     @Transactional
