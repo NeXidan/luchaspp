@@ -42,4 +42,4 @@ testem.log
 Thumbs.db
 
 # example
-*.example.ts
+src/environments/environment.ts

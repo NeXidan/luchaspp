@@ -6,6 +6,6 @@
 export const environment = {
     production: false,
     api: {
-        root: 'http://localhost:8080/'
+        root: '/api/'
     }
 };
