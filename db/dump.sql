@@ -1,282 +1,129 @@
--- MySQL dump 10.13  Distrib 5.7.17, for Linux (x86_64)
+-- phpMyAdmin SQL Dump
+-- version 4.5.4.1deb2ubuntu2
+-- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1    Database: spp_labs
--- ------------------------------------------------------
--- Server version	5.7.17-0ubuntu0.16.04.1
+-- Хост: localhost
+-- Время создания: Апр 17 2017 г., 22:49
+-- Версия сервера: 5.7.17-0ubuntu0.16.04.2
+-- Версия PHP: 7.0.15-0ubuntu0.16.04.4
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Table structure for table `components`
+-- База данных: `spp_labs`
 --
 
-DROP TABLE IF EXISTS `components`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `components`
+--
+
 CREATE TABLE `components` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`)
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `components`
+-- Структура таблицы `components_tasks`
 --
 
-LOCK TABLES `components` WRITE;
-/*!40000 ALTER TABLE `components` DISABLE KEYS */;
-/*!40000 ALTER TABLE `components` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `components_tasks`
---
-
-DROP TABLE IF EXISTS `components_tasks`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `components_tasks` (
   `component_id` int(11) NOT NULL,
-  `task_id` int(11) NOT NULL,
-  UNIQUE KEY `index3` (`component_id`,`task_id`),
-  KEY `fk_components_tasks_1_idx` (`component_id`),
-  KEY `fk_components_tasks_2_idx` (`task_id`),
-  CONSTRAINT `fk_components_tasks_1` FOREIGN KEY (`component_id`) REFERENCES `components` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_components_tasks_2` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  `task_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `components_tasks`
+-- Структура таблицы `priorities`
 --
 
-LOCK TABLES `components_tasks` WRITE;
-/*!40000 ALTER TABLE `components_tasks` DISABLE KEYS */;
-/*!40000 ALTER TABLE `components_tasks` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `priorities`
---
-
-DROP TABLE IF EXISTS `priorities`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `priorities` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`)
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `priorities`
+-- Структура таблицы `projects`
 --
 
-LOCK TABLES `priorities` WRITE;
-/*!40000 ALTER TABLE `priorities` DISABLE KEYS */;
-/*!40000 ALTER TABLE `priorities` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE `projects` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text,
+  `status` tinyint(4) DEFAULT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `project_users`
+-- Дамп данных таблицы `projects`
 --
 
-DROP TABLE IF EXISTS `project_users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+INSERT INTO `projects` (`id`, `name`, `description`, `status`, `created_at`) VALUES
+  (1, 'name', 'desc', 1, '2017-03-19 18:57:34'),
+  (33, 'zekker', 'zekker', 1, '1970-01-01 03:00:00'),
+  (45, 'zekke2', 'zekker', 1, '1970-01-01 03:00:00'),
+  (46, 'zekke12', 'zekker', 1, '1970-01-01 03:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `project_users`
+--
+
 CREATE TABLE `project_users` (
   `project_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  UNIQUE KEY `index3` (`project_id`,`user_id`),
-  KEY `fk_project_watchers_1_idx` (`user_id`),
-  KEY `fk_project_watchers_2_idx` (`project_id`),
-  CONSTRAINT `fk_project_watchers_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_project_watchers_2` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `project_users`
+-- Структура таблицы `roles`
 --
 
-LOCK TABLES `project_users` WRITE;
-/*!40000 ALTER TABLE `project_users` DISABLE KEYS */;
-/*!40000 ALTER TABLE `project_users` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `projects`
---
-
-DROP TABLE IF EXISTS `projects`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `projects` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `status` tinyint(4) DEFAULT NULL,
-  `created_at` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `projects`
---
-
-LOCK TABLES `projects` WRITE;
-/*!40000 ALTER TABLE `projects` DISABLE KEYS */;
-INSERT INTO `projects` VALUES (1,'name','desc',1,'2017-03-19 18:57:34');
-/*!40000 ALTER TABLE `projects` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `roles`
---
-
-DROP TABLE IF EXISTS `roles`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `roles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`)
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `roles`
+-- Структура таблицы `sprints`
 --
 
-LOCK TABLES `roles` WRITE;
-/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `sprints`
---
-
-DROP TABLE IF EXISTS `sprints`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sprints` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `project_id` int(11) NOT NULL,
   `start_at` datetime NOT NULL,
   `finish_at` datetime NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_sprints_1_idx` (`project_id`),
-  CONSTRAINT `fk_sprints_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `description` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `sprints`
+-- Структура таблицы `tasks`
 --
 
-LOCK TABLES `sprints` WRITE;
-/*!40000 ALTER TABLE `sprints` DISABLE KEYS */;
-/*!40000 ALTER TABLE `sprints` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `task_update_log`
---
-
-DROP TABLE IF EXISTS `task_update_log`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `task_update_log` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `task_id` int(11) NOT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `status` varchar(45) DEFAULT NULL,
-  `priority` varchar(45) DEFAULT NULL,
-  `responsible_id` int(11) DEFAULT NULL,
-  `finish_at` datetime DEFAULT NULL,
-  `progress` int(11) DEFAULT NULL,
-  `estimated_time` double DEFAULT NULL,
-  `spent_time` double DEFAULT NULL,
-  `version_id` int(11) DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `author_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_task_update_log_1_idx` (`task_id`),
-  KEY `fk_task_update_log_2_idx` (`responsible_id`),
-  KEY `fk_task_update_log_3_idx` (`version_id`),
-  KEY `fk_task_update_log_4_idx` (`author_id`),
-  CONSTRAINT `fk_task_update_log_1` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_task_update_log_2` FOREIGN KEY (`responsible_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_task_update_log_3` FOREIGN KEY (`version_id`) REFERENCES `versions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_task_update_log_4` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `task_update_log`
---
-
-LOCK TABLES `task_update_log` WRITE;
-/*!40000 ALTER TABLE `task_update_log` DISABLE KEYS */;
-/*!40000 ALTER TABLE `task_update_log` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `task_watchers`
---
-
-DROP TABLE IF EXISTS `task_watchers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `task_watchers` (
-  `user_id` int(11) NOT NULL,
-  `task_id` int(11) NOT NULL,
-  KEY `fk_task_watchers_1_idx` (`user_id`),
-  KEY `fk_task_watchers_2_idx` (`task_id`),
-  CONSTRAINT `fk_task_watchers_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_task_watchers_2` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `task_watchers`
---
-
-LOCK TABLES `task_watchers` WRITE;
-/*!40000 ALTER TABLE `task_watchers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `task_watchers` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `tasks`
---
-
-DROP TABLE IF EXISTS `tasks`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tasks` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  `description` varchar(45) DEFAULT NULL,
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text,
   `status` varchar(45) NOT NULL,
   `priority_id` int(11) NOT NULL,
   `creator_id` int(11) NOT NULL,
@@ -289,93 +136,295 @@ CREATE TABLE `tasks` (
   `spent_time` double NOT NULL,
   `version_id` int(11) DEFAULT NULL,
   `sprint_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_tasks_1_idx` (`responsible_id`),
-  KEY `fk_tasks_2_idx` (`creator_id`),
-  KEY `fk_tasks_3_idx` (`priority_id`),
-  KEY `fk_tasks_4_idx` (`version_id`),
-  KEY `fk_tasks_5_idx` (`sprint_id`),
-  CONSTRAINT `fk_tasks_1` FOREIGN KEY (`responsible_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `fk_tasks_2` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `fk_tasks_3` FOREIGN KEY (`priority_id`) REFERENCES `priorities` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `fk_tasks_4` FOREIGN KEY (`version_id`) REFERENCES `versions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_tasks_5` FOREIGN KEY (`sprint_id`) REFERENCES `sprints` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  `parent_task_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `tasks`
+-- Структура таблицы `task_update_log`
 --
 
-LOCK TABLES `tasks` WRITE;
-/*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE `task_update_log` (
+  `id` int(11) NOT NULL,
+  `task_id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `description` text,
+  `status` varchar(255) DEFAULT NULL,
+  `priority_id` int(11) DEFAULT NULL,
+  `responsible_id` int(11) DEFAULT NULL,
+  `finish_at` datetime DEFAULT NULL,
+  `progress` int(11) DEFAULT NULL,
+  `estimated_time` double DEFAULT NULL,
+  `spent_time` double DEFAULT NULL,
+  `version_id` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `author_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Структура таблицы `task_watchers`
 --
 
-DROP TABLE IF EXISTS `users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `task_watchers` (
+  `user_id` int(11) NOT NULL,
+  `task_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `users`
+--
+
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `full_name` varchar(45) DEFAULT NULL,
-  `email` varchar(45) NOT NULL,
+  `id` int(11) NOT NULL,
+  `full_name` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `last_action_at` datetime DEFAULT NULL,
   `phone_number` varchar(45) DEFAULT NULL,
   `role_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_user_1_idx` (`role_id`),
-  CONSTRAINT `fk_user_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON UPDATE CASCADE
+  `password` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `enabled` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `users`
+-- Дамп данных таблицы `users`
 --
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `users` (`id`, `full_name`, `created_at`, `last_action_at`, `phone_number`, `role_id`, `password`, `username`, `enabled`) VALUES
+  (1, NULL, '2017-03-22 14:07:14', NULL, NULL, NULL, 'zekker', 'zekker', 1);
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `versions`
+-- Структура таблицы `versions`
 --
 
-DROP TABLE IF EXISTS `versions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `versions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  `created_at` varchar(45) DEFAULT NULL,
-  `project_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`,`project_id`),
-  KEY `fk_versions_1` (`project_id`),
-  CONSTRAINT `fk_versions_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `project_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `versions`
+-- Индексы сохранённых таблиц
 --
 
-LOCK TABLES `versions` WRITE;
-/*!40000 ALTER TABLE `versions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `versions` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+--
+-- Индексы таблицы `components`
+--
+ALTER TABLE `components`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name_UNIQUE` (`name`);
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+--
+-- Индексы таблицы `components_tasks`
+--
+ALTER TABLE `components_tasks`
+  ADD UNIQUE KEY `index3` (`component_id`,`task_id`),
+  ADD KEY `fk_components_tasks_1_idx` (`component_id`),
+  ADD KEY `fk_components_tasks_2_idx` (`task_id`);
+
+--
+-- Индексы таблицы `priorities`
+--
+ALTER TABLE `priorities`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name_UNIQUE` (`name`);
+
+--
+-- Индексы таблицы `projects`
+--
+ALTER TABLE `projects`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `projects_name_uindex` (`name`),
+  ADD UNIQUE KEY `UK1e447b96pedrvtxw44ot4qxem` (`name`);
+
+--
+-- Индексы таблицы `project_users`
+--
+ALTER TABLE `project_users`
+  ADD UNIQUE KEY `index3` (`project_id`,`user_id`),
+  ADD KEY `fk_project_watchers_1_idx` (`user_id`),
+  ADD KEY `fk_project_watchers_2_idx` (`project_id`);
+
+--
+-- Индексы таблицы `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name_UNIQUE` (`name`);
+
+--
+-- Индексы таблицы `sprints`
+--
+ALTER TABLE `sprints`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_sprints_1_idx` (`project_id`);
+
+--
+-- Индексы таблицы `tasks`
+--
+ALTER TABLE `tasks`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_tasks_1_idx` (`responsible_id`),
+  ADD KEY `fk_tasks_2_idx` (`creator_id`),
+  ADD KEY `fk_tasks_3_idx` (`priority_id`),
+  ADD KEY `fk_tasks_4_idx` (`version_id`),
+  ADD KEY `fk_tasks_5_idx` (`sprint_id`),
+  ADD KEY `tasks_tasks_id_fk` (`parent_task_id`);
+
+--
+-- Индексы таблицы `task_update_log`
+--
+ALTER TABLE `task_update_log`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_task_update_log_1_idx` (`task_id`),
+  ADD KEY `fk_task_update_log_2_idx` (`responsible_id`),
+  ADD KEY `fk_task_update_log_3_idx` (`version_id`),
+  ADD KEY `fk_task_update_log_4_idx` (`author_id`),
+  ADD KEY `task_update_log_priority_id_index` (`priority_id`);
+
+--
+-- Индексы таблицы `task_watchers`
+--
+ALTER TABLE `task_watchers`
+  ADD KEY `fk_task_watchers_1_idx` (`user_id`),
+  ADD KEY `fk_task_watchers_2_idx` (`task_id`);
+
+--
+-- Индексы таблицы `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `UKr43af9ap4edm43mmtq01oddj6` (`username`),
+  ADD KEY `fk_user_1_idx` (`role_id`);
+
+--
+-- Индексы таблицы `versions`
+--
+ALTER TABLE `versions`
+  ADD PRIMARY KEY (`id`,`project_id`),
+  ADD KEY `fk_versions_1` (`project_id`);
+
+--
+-- AUTO_INCREMENT для сохранённых таблиц
+--
+
+--
+-- AUTO_INCREMENT для таблицы `components`
+--
+ALTER TABLE `components`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT для таблицы `priorities`
+--
+ALTER TABLE `priorities`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT для таблицы `projects`
+--
+ALTER TABLE `projects`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+--
+-- AUTO_INCREMENT для таблицы `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT для таблицы `sprints`
+--
+ALTER TABLE `sprints`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT для таблицы `tasks`
+--
+ALTER TABLE `tasks`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT для таблицы `task_update_log`
+--
+ALTER TABLE `task_update_log`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT для таблицы `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT для таблицы `versions`
+--
+ALTER TABLE `versions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- Ограничения внешнего ключа сохраненных таблиц
+--
+
+--
+-- Ограничения внешнего ключа таблицы `components_tasks`
+--
+ALTER TABLE `components_tasks`
+  ADD CONSTRAINT `fk_components_tasks_1` FOREIGN KEY (`component_id`) REFERENCES `components` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_components_tasks_2` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `project_users`
+--
+ALTER TABLE `project_users`
+  ADD CONSTRAINT `fk_project_watchers_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_project_watchers_2` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `sprints`
+--
+ALTER TABLE `sprints`
+  ADD CONSTRAINT `fk_sprints_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Ограничения внешнего ключа таблицы `tasks`
+--
+ALTER TABLE `tasks`
+  ADD CONSTRAINT `fk_tasks_1` FOREIGN KEY (`responsible_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_tasks_2` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_tasks_3` FOREIGN KEY (`priority_id`) REFERENCES `priorities` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_tasks_4` FOREIGN KEY (`version_id`) REFERENCES `versions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_tasks_5` FOREIGN KEY (`sprint_id`) REFERENCES `sprints` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tasks_tasks_id_fk` FOREIGN KEY (`parent_task_id`) REFERENCES `tasks` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `task_update_log`
+--
+ALTER TABLE `task_update_log`
+  ADD CONSTRAINT `fk_task_update_log_1` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_task_update_log_2` FOREIGN KEY (`responsible_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_task_update_log_3` FOREIGN KEY (`version_id`) REFERENCES `versions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_task_update_log_4` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `task_update_log_priorities_id_fk` FOREIGN KEY (`priority_id`) REFERENCES `priorities` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `task_watchers`
+--
+ALTER TABLE `task_watchers`
+  ADD CONSTRAINT `fk_task_watchers_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_task_watchers_2` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `fk_user_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `versions`
+--
+ALTER TABLE `versions`
+  ADD CONSTRAINT `fk_versions_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2017-03-20 20:23:51
