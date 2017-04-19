@@ -1,0 +1,21 @@
+<div class="wrap">
+    <form (ngSubmit)="onLogin(loginForm)" #loginForm="ngForm">
+        <table class="t">
+            <tr>
+                <td>
+                    <input ngModel name="username" placeholder="Username" required/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input ngModel name="password" placeholder="Password" type="password" required/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button label="Log in" type="submit" max [disabled]="!loginForm.form.valid"></button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>

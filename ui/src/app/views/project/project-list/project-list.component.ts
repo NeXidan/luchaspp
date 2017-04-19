@@ -12,12 +12,12 @@ export class ProjectListComponent implements OnInit {
     projects: Project[] = [];
     error: string;
 
-    constructor(private projectService: ProjectService) {
+    constructor(private _projectService: ProjectService) {
 
     }
 
     ngOnInit() {
-        return this.projectService.fetch()
+        return this._projectService.fetch()
             .subscribe(
                 (projects) => this.projects = projects,
                 (error) =>  this.error = <any>error

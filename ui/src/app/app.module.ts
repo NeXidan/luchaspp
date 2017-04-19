@@ -1,31 +1,23 @@
-import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
-import {RouterModule, Routes} from '@angular/router';
+import {BrowserModule} from '@angular/platform-browser';
 
-import {BaseLayout} from './views/pages/base/base.layout';
-import {ProjectListComponent} from './views/components/project-list/project-list.component';
-import {ProjectComponent} from './views/components/project/project.component';
+import {RoutingModule} from './views/routing.module';
+import {AuthModule} from './auth.module';
 
-const appRoutes: Routes = [
-  {path: 'projects', component: ProjectListComponent}
-];
+import {AppComponent} from './views/app.component';
+import {AuthService} from './auth.service';
 
 @NgModule({
     declarations: [
-        BaseLayout,
-        ProjectListComponent,
-        ProjectComponent
+        AppComponent
     ],
     imports: [
         BrowserModule,
-        FormsModule,
-        HttpModule,
-        RouterModule.forRoot(appRoutes)
+        AuthModule,
+        RoutingModule
     ],
-    providers: [],
-    bootstrap: [BaseLayout]
+    providers: [AuthService],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 

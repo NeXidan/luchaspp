@@ -1,0 +1,5 @@
+<div *ngIf="icon" class="icon" [style.background-image]="'url(' + icon + ')'"></div>
+<div *ngIf="label" class="label">
+    {{label}}
+</div>
+<ng-content></ng-content>
