@@ -1,11 +1,8 @@
 package org.bsuir.labs.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.bsuir.labs.auth.AccountCredentials;
 
-import org.bsuir.labs.controllers.UserController;
-import org.bsuir.labs.entities.UsersEntity;
-import org.bsuir.labs.repositories.UserRepository;
+import org.bsuir.labs.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,9 +19,6 @@ import java.io.IOException;
 import java.util.Collections;
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
-
-    @Autowired
-    UserRepository userRepository;
 
     public JWTLoginFilter(String url, AuthenticationManager authManager) {
         super(new AntPathRequestMatcher(url));

@@ -1,9 +1,8 @@
 package org.bsuir.labs.controllers;
 
-
 import org.bsuir.labs.controllers.contracts.BasicController;
 import org.bsuir.labs.entities.UsersEntity;
-import org.bsuir.labs.repositories.UserRepository;
+import org.bsuir.labs.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,41 +12,39 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 
-@RestController
-@RequestMapping("/user")
+@RestController("/user")
 public class UserController extends BasicController<UsersEntity> {
-
     @Autowired
-    UserRepository userRepository;
+    protected UsersRepository userRepository;
 
     private static UsersEntity current;
 
     void setCurrent(UsersEntity user) {
-        current = user;
+        this.current = user;
     }
 
     public UsersEntity getCurrent() {
-        if (current == null) {
+        if (this.current == null) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String name = auth.getName();
             setCurrent(userRepository.findByUsername(name));
         }
 
-        return current;
+        return this.current;
     }
 
     @Transactional
     @GetMapping("/me")
     public ResponseEntity<UsersEntity> me() {
-        return success(getCurrent());
+        return this.success(this.getCurrent());
     }
 
     @Transactional
     @PutMapping("/update/{id}")
     public ResponseEntity<UsersEntity> update(@PathVariable("id") Integer id, @RequestBody UsersEntity entity) {
-        UsersEntity dbEntity = userRepository.findOne(id);
-        if (null == dbEntity) {
-            return error(HttpStatus.NOT_FOUND);
+        UsersEntity dbEntity = this.userRepository.findOne(id);
+        if (dbEntity == null) {
+            return this.error(HttpStatus.NOT_FOUND);
         }
 
         dbEntity.setFullName(entity.getFullName());
@@ -55,9 +52,9 @@ public class UserController extends BasicController<UsersEntity> {
         dbEntity.setPassword(entity.getPassword());
         dbEntity.setUsername(entity.getUsername());
 
-        userRepository.save(dbEntity);
+        this.userRepository.save(dbEntity);
 
-        return success(dbEntity);
+        return this.success(dbEntity);
     }
 
 }

@@ -12,7 +12,7 @@ import java.util.Date;
 import static java.util.Collections.emptyList;
 
 class TokenAuthenticationService {
-    static final long EXPIRATIONTIME = 864_000_000; // 10 days
+    static final long EXPIRATION_TIME = 864_000_000; // 10 days
     static final String SECRET = "ThisIsASecret";
     static final String TOKEN_PREFIX = "Bearer";
     static final String HEADER_STRING = "Authorization";
@@ -20,7 +20,7 @@ class TokenAuthenticationService {
     static void addAuthentication(HttpServletResponse res, String username) {
         String JWT = Jwts.builder()
                 .setSubject(username)
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + JWT);
