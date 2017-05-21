@@ -4,17 +4,17 @@ import javax.persistence.*;
 
 @Table(name = "project_users")
 public class ProjectUsersEntity {
-    private ProjectEntity projectEntity;
+    private ProjectsEntity projectEntity;
     private UsersEntity userEntity;
 
     @Id
     @ManyToOne
     @JoinColumn(name = "project_id")
-    public ProjectEntity getProject() {
+    public ProjectsEntity getProject() {
         return projectEntity;
     }
 
-    public void setProject(ProjectEntity entity) {
+    public void setProject(ProjectsEntity entity) {
         this.projectEntity = entity;
     }
 

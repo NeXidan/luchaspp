@@ -2,7 +2,7 @@ package org.bsuir.labs.controllers;
 
 
 import org.bsuir.labs.controllers.contracts.BasicController;
-import org.bsuir.labs.entities.ProjectEntity;
+import org.bsuir.labs.entities.ProjectsEntity;
 import org.bsuir.labs.repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/projects")
-public class ProjectController extends BasicController<ProjectEntity> {
+public class ProjectController extends BasicController<ProjectsEntity> {
 
     @Autowired
     public ProjectRepository repository;
@@ -26,7 +26,7 @@ public class ProjectController extends BasicController<ProjectEntity> {
 
     @Transactional
     @PostMapping("/")
-    public ResponseEntity<ProjectEntity> store(@RequestBody ProjectEntity entity) {
+    public ResponseEntity<ProjectsEntity> store(@RequestBody ProjectsEntity entity) {
         if (repository.existsByName(entity.getName())) {
             return error(HttpStatus.CONFLICT);
         }
@@ -36,8 +36,8 @@ public class ProjectController extends BasicController<ProjectEntity> {
 
     @Transactional
     @PutMapping("/{id}")
-    public ResponseEntity<ProjectEntity> update(@PathVariable("id") Integer id, @RequestBody ProjectEntity entity) {
-        ProjectEntity dbEntity = repository.findOne(id);
+    public ResponseEntity<ProjectsEntity> update(@PathVariable("id") Integer id, @RequestBody ProjectsEntity entity) {
+        ProjectsEntity dbEntity = repository.findOne(id);
         if (null == dbEntity) {
             return error(HttpStatus.NOT_FOUND);
         }
@@ -54,7 +54,7 @@ public class ProjectController extends BasicController<ProjectEntity> {
 
     @Transactional
     @DeleteMapping("/{id}")
-    public ResponseEntity<ProjectEntity> delete(@PathVariable("id") Integer id) {
+    public ResponseEntity<ProjectsEntity> delete(@PathVariable("id") Integer id) {
         if (!repository.exists(id)) {
             return error(HttpStatus.NOT_FOUND);
         }

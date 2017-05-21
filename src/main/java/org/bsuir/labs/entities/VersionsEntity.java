@@ -13,7 +13,7 @@ public class VersionsEntity {
     private String name;
     private Timestamp createdAt;
     private int projectId;
-    private Set<ProjectEntity> projects = new HashSet<>(0);
+    private Set<ProjectsEntity> projects = new HashSet<>(0);
 
     @Id
     @Column(name = "id", nullable = false)
@@ -81,11 +81,11 @@ public class VersionsEntity {
 
 //    @ManyToMany(cascade = CascadeType.ALL)
 //    @JoinTable(name="projects", joinColumns = {@JoinColumn(name="id")}, inverseJoinColumns = {@JoinColumn(name="id")})
-//    public Set<ProjectEntity> getProjects() {
+//    public Set<ProjectsEntity> getProjects() {
 //        return this.projects;
 //    }
 //
-//    public void setProjects(Set<ProjectEntity> projects) {
+//    public void setProjects(Set<ProjectsEntity> projects) {
 //        this.projects = projects;
 //    }
 

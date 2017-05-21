@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 @Table(name = "projects",
         uniqueConstraints = @UniqueConstraint(columnNames = {"name"})
 )
-public class ProjectEntity {
+public class ProjectsEntity {
     private int id;
     private String name;
     private String description;
@@ -71,7 +71,7 @@ public class ProjectEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ProjectEntity that = (ProjectEntity) o;
+        ProjectsEntity that = (ProjectsEntity) o;
 
         if (id != that.id) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
