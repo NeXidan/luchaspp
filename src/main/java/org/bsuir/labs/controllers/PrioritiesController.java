@@ -14,7 +14,9 @@ import java.util.List;
 @RequestMapping("/priorities")
 public class PrioritiesController extends CRUDController<PrioritiesEntity> {
     @Autowired
-    protected PrioritiesRepository repository;
+    public PrioritiesController(PrioritiesRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     @GetMapping("/")

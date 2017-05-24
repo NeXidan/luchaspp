@@ -3,6 +3,7 @@ package org.bsuir.labs.controllers;
 import org.bsuir.labs.controllers.contracts.CRUDController;
 import org.bsuir.labs.entities.ComponentsEntity;
 import org.bsuir.labs.repositories.ComponentsRepository;
+import org.bsuir.labs.repositories.EntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +15,9 @@ import java.util.List;
 @RequestMapping("/components")
 public class ComponentsController extends CRUDController<ComponentsEntity> {
     @Autowired
-    protected ComponentsRepository repository;
+    public ComponentsController(ComponentsRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     @GetMapping("/")

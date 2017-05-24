@@ -20,6 +20,9 @@ import java.util.Collections;
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
+    @Autowired
+    UsersRepository userRepository;
+
     public JWTLoginFilter(String url, AuthenticationManager authManager) {
         super(new AntPathRequestMatcher(url));
         setAuthenticationManager(authManager);
@@ -31,6 +34,10 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
             throws AuthenticationException, IOException, ServletException {
         AccountCredentials creds = new ObjectMapper()
                 .readValue(req.getInputStream(), AccountCredentials.class);
+
+        res.setHeader("Access-Control-Allow-Origin", "http://localhost:9000");
+        res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+        res.setHeader("Access-Control-Expose-Headers", "X-Authorization");
 
         return getAuthenticationManager().authenticate(
                 new UsernamePasswordAuthenticationToken(

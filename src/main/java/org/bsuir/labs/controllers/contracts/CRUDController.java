@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-public class CRUDController<T> extends BasicController<T> {
+public abstract class CRUDController<T> extends BasicController<T> {
     protected EntityRepository<T> repository;
 
     public List list() {

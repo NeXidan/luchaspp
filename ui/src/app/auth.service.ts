@@ -25,11 +25,11 @@ export class AuthService {
     login(data) {
         this._http.post(environment.api.root + 'login', JSON.stringify(data))
             .map((response: Response) => {
-                let token = response.headers.get('Authorization');
+                let token = response.headers.get('X-Authorization');
 
                 if (token) {
                     setItem('token', token);
-                    this._router.navigateByUrl(this.repath);
+                    this._router.navigateByUrl(this.repath || '/');
                 } else {
                     this.logout();
                 }

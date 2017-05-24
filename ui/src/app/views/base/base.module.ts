@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {RouterModule, Routes} from '@angular/router';
 
-import {ComponentsModule} from '../components/components.module';
+import {ComponentsModule} from '../components.module';
 import {LoginComponent} from './login/login.component';
 
 const routes: Routes = [

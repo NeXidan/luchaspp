@@ -10,7 +10,7 @@ export function authHttpServiceFactory(
     authService: AuthService
 ) {
     return new AuthHttp(new AuthConfig({
-        headerName: 'Authorization',
+        headerName: 'X-Authorization',
         noTokenScheme: true,
         tokenName: 'token',
         tokenGetter: (() => {

@@ -2,6 +2,7 @@ package org.bsuir.labs.controllers;
 
 import org.bsuir.labs.controllers.contracts.CRUDController;
 import org.bsuir.labs.entities.ProjectsEntity;
+import org.bsuir.labs.repositories.EntityRepository;
 import org.bsuir.labs.repositories.ProjectsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +11,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/projects")
+@RestController
+@RequestMapping("/projects")
 public class ProjectsController extends CRUDController<ProjectsEntity> {
     @Autowired
-    protected ProjectsRepository repository;
+    public ProjectsController(ProjectsRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     @GetMapping("/")

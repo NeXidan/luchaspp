@@ -15,7 +15,7 @@ import javax.transaction.Transactional;
 @RestController("/user")
 public class UserController extends BasicController<UsersEntity> {
     @Autowired
-    protected UsersRepository userRepository;
+    UsersRepository userRepository;
 
     private static UsersEntity current;
 
