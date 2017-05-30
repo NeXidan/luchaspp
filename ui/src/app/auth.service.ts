@@ -17,13 +17,13 @@ export class AuthService {
         private _router: Router,
         private _route: ActivatedRoute
     ) {
-        let repath = this._route.queryParams.subscribe((params) => {
+        this._route.queryParams.subscribe((params) => {
             this.repath = params['repath'];
         });
     }
 
     login(data) {
-        this._http.post(environment.api.root + 'login', JSON.stringify(data))
+        this._http.post(environment.api.root + '/login', JSON.stringify(data))
             .map((response: Response) => {
                 let token = response.headers.get('X-Authorization');
 
@@ -39,8 +39,12 @@ export class AuthService {
             });
     }
 
-    logout() {
+    logout({navigate = true} = <any>{}) {
         removeItem('token');
+
+        if (navigate) {
+            this._router.navigate(['/login']);
+        }
     }
 
     isLoggedIn() {

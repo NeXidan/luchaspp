@@ -3,13 +3,11 @@ export class Project {
     name: string;
     description: string;
     status: number;
-    createdAt: Date;
 
-    constructor({id, name, description, status, createdAt} = <any>{}) {
+    constructor({id, name, description, status} = <any>{}) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.status = status;
-        this.createdAt = new Date(createdAt);
     }
 }

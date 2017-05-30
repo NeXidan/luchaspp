@@ -1,0 +1,54 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#base-header-collapse" aria-expanded="false">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" routerLink="/">SPP Tracker</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="base-header-collapse">
+            <ul *ngIf="isLoggedIn()" class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        {{selectedProject ? selectedProject : "Select project"}} <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                            <a preserveQueryParams routerLink="/">No project</a>
+                        </li>
+                        <li *ngFor="let project of projects" routerLinkActive="active">
+                            <a preserveQueryParams [routerLink]="['/tasks', project.name]">{{project.name}}</a>
+                        </li>
+                    </ul>
+                </li>
+                <li [class.active]="isActive(['tasks', selectedProject])">
+                    <a preserveQueryParams [routerLink]="selectedProject ? ['/tasks', selectedProject] : '/tasks'">Tasks</a>
+                </li>
+                <li *ngIf="selectedProject" routerLinkActive="active">
+                    <a [routerLink]="['/project', selectedProject]">Project</a>
+                </li>
+                <li *ngIf="selectedUser" routerLinkActive="active">
+                    <a [routerLink]="['/user', selectedUser]">User</a>
+                </li>
+                <!-- <li><a href="#">Link</a></li> -->
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li *ngIf="user" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        {{user.fullName ? user.fullName : user.username}}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li routerLinkActive="active"><a [routerLink]="['/user', user.username]">My page</a></li>
+
+                        <li role="separator" class="divider"></li>
+                        <li (click)="logout()"><a>Log out</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>

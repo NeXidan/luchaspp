@@ -12,7 +12,7 @@ import 'rxjs/add/observable/empty';
 export abstract class AbstractService<ModelClass> {
     protected _url = '/';
 
-    constructor (private _http: AuthHttp, private _router: Router) {
+    constructor (protected _http: AuthHttp, protected _router: Router) {
 
     }
 
@@ -22,9 +22,20 @@ export abstract class AbstractService<ModelClass> {
             .catch(this._onError.bind(this));
     }
 
+    fetchOne(id): Observable<ModelClass> {
+        return this._http.get(this._url + id)
+            .map(this._parseOne.bind(this))
+            .catch(this._onError.bind(this));
+    }
+
     protected _parse(response: Response) {
         let data = response.json() || [];
         return data.map(this._create.bind(this));
+    }
+
+    protected _parseOne(response: Response) {
+        let data = response.json() || {};
+        return this._create(data);
     }
 
     protected abstract _create(options): ModelClass;
@@ -33,7 +44,7 @@ export abstract class AbstractService<ModelClass> {
         let message: string;
 
         if (response instanceof Response) {
-            const {error = ''} = response.json() || {};
+            let {error = ''} = response.json() || {};
             message = `Error: ${response.status} - ${response.statusText || ''} ${error}`;
         } else {
             message = response.message ? response.message : response.toString();

@@ -1,7 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 
-import {environment} from '../../../../environments/environment';
 import {AuthService} from '../../../auth.service';
 
 @Component({
@@ -9,9 +8,13 @@ import {AuthService} from '../../../auth.service';
     styleUrls: ['./login.component.less'],
     providers: [AuthService]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
     constructor(private _authService: AuthService) {
 
+    }
+
+    ngOnInit() {
+        this._authService.logout({navigate: false});
     }
 
     onLogin(form: NgForm) {

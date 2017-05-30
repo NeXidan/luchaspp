@@ -1,9 +1,10 @@
 import {NgModule} from '@angular/core';
 
 import {ButtonsModule} from 'ngx-bootstrap/buttons';
+import {CollapseModule} from 'ngx-bootstrap/collapse';
 
 const COMPONENTS = [
-    ButtonsModule
+    // ButtonsModule, CollapseModule
 ];
 
 @NgModule({

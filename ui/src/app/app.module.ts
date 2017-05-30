@@ -5,11 +5,17 @@ import {RoutingModule} from './views/routing.module';
 import {AuthModule} from './auth.module';
 
 import {AppComponent} from './views/app.component';
+import {BaseLayout} from './views/base/base.layout';
+import {HeaderComponent} from './views/base/header/header.component';
+import {FooterComponent} from './views/base/footer/footer.component';
 import {AuthService} from './auth.service';
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        BaseLayout,
+        HeaderComponent,
+        FooterComponent
     ],
     imports: [
         BrowserModule,

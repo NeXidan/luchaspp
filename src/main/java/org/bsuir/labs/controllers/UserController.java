@@ -12,25 +12,26 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 
-@RestController("/user")
+@RestController
+@RequestMapping("/user")
 public class UserController extends BasicController<UsersEntity> {
     @Autowired
-    UsersRepository userRepository;
+    private UsersRepository userRepository;
 
     private static UsersEntity current;
 
-    void setCurrent(UsersEntity user) {
-        this.current = user;
+    private void setCurrent(UsersEntity user) {
+        UserController.current = user;
     }
 
-    public UsersEntity getCurrent() {
-        if (this.current == null) {
+    private UsersEntity getCurrent() {
+        if (UserController.current == null) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String name = auth.getName();
             setCurrent(userRepository.findByUsername(name));
         }
 
-        return this.current;
+        return UserController.current;
     }
 
     @Transactional

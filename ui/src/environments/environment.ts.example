@@ -6,6 +6,6 @@
 export const environment = {
     production: false,
     api: {
-        root: '/api/'
+        root: '/api'
     }
 };
