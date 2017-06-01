@@ -1,0 +1,57 @@
+.navbar-version {
+    font-size: 10px;
+    color: #ccc
+}
+
+.app-navbar {
+    padding: 0;
+    background-color: #f8f8f8;
+    border: 1px solid #e7e7e7;
+    .dropdown-item.active, .dropdown-item.active:focus, .dropdown-item.active:hover {
+        background-color: #353d47;
+    }
+    .dropdown-toggle::after {
+        margin-left: 0.15em;
+    }
+    ul.navbar-nav {
+        padding: 0;
+        .nav-item {
+            margin-left: 1.5rem;
+            line-height: 42px;
+
+            &.active {
+                background-color: #e7e7e7;
+            }
+        }
+    }
+    a.nav-link {
+        font-weight: 400;
+    }
+    .app-navbar-toggler {
+        color: #ccc;
+        font-size: 1.5em;
+        padding: 10px;
+        &:hover {
+            color: #fff;
+        }
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .app-logo-container {
+        width: 100%;
+    }
+}
+
+.navbar-title {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+.navbar-brand {
+    &.logo {
+        line-height: 42px;
+        padding: 5px 15px;
+    }
+}

@@ -1,0 +1,6 @@
+/* after changing this file run 'npm run webpack:build:vendor' or 'npm install' or 'npm run webpack:build' */
+$fa-font-path: '~font-awesome/fonts';
+
+
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'node_modules/font-awesome/scss/font-awesome';
