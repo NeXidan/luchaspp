@@ -1,0 +1,39 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "project",
+            "otherEntityName": "project",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "task",
+            "otherEntityName": "task",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "tag"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "taskRevision",
+            "otherEntityName": "taskRevision",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "tag"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20170530224404",
+    "entityTableName": "tag",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl"
+}

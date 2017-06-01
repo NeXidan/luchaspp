@@ -1,0 +1,111 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myTaskLabel">Create or edit a Task</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <app-alert-error></app-alert-error>
+        <div class="form-group" [hidden]="!task.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="task.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name"
+                [(ngModel)]="task.name"
+            required />
+            <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.name?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_description">Description</label>
+            <input type="text" class="form-control" name="description" id="field_description"
+                [(ngModel)]="task.description"
+             />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_status">Status</label>
+            <select class="form-control" name="status" [(ngModel)]="task.status" id="field_status" >
+                <option value="OPEN">OPEN</option>
+                <option value="NEED_INFO">NEED_INFO</option>
+                <option value="IN_PROGRESS">IN_PROGRESS</option>
+                <option value="ON_REVIEW">ON_REVIEW</option>
+                <option value="READY_FOR_RELEASE">READY_FOR_RELEASE</option>
+                <option value="CLOSED">CLOSED</option>
+                <option value="WONT_FIX">WONT_FIX</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_priority">Priority</label>
+            <select class="form-control" name="priority" [(ngModel)]="task.priority" id="field_priority" >
+                <option value="LOW">LOW</option>
+                <option value="MEDIUM">MEDIUM</option>
+                <option value="HIGH">HIGH</option>
+                <option value="CRITICAL">CRITICAL</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="field_parentTask">Parent Task</label>
+            <select class="form-control" id="field_parentTask" name="parentTask" [(ngModel)]="task.parentTask" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="taskOption.id === task.parentTask?.id ? task.parentTask : taskOption" *ngFor="let taskOption of tasks; trackBy: trackTaskById">{{taskOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_sprint">Sprint</label>
+            <select class="form-control" id="field_sprint" name="sprint" [(ngModel)]="task.sprint" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="sprintOption.id === task.sprint?.id ? task.sprint : sprintOption" *ngFor="let sprintOption of sprints; trackBy: trackSprintById">{{sprintOption.name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_project">Project</label>
+            <select class="form-control" id="field_project" name="project" [(ngModel)]="task.project" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="projectOption.id === task.project?.id ? task.project : projectOption" *ngFor="let projectOption of projects; trackBy: trackProjectById">{{projectOption.name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_author">Author</label>
+            <select class="form-control" id="field_author" name="author" [(ngModel)]="task.author" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="userOption.id === task.author?.id ? task.author : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_assignee">Assignee</label>
+            <select class="form-control" id="field_assignee" name="assignee" [(ngModel)]="task.assignee" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="userOption.id === task.assignee?.id ? task.assignee : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_watcher">Watcher</label>
+            <select class="form-control" id="field_watcher" multiple name="watcher" [(ngModel)]="task.watchers">
+                <option [ngValue]="getSelected(task.watchers, userOption)" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_tag">Tag</label>
+            <select class="form-control" id="field_tag" multiple name="tag" [(ngModel)]="task.tags">
+                <option [ngValue]="getSelected(task.tags, tagOption)" *ngFor="let tagOption of tags; trackBy: trackTagById">{{tagOption.name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

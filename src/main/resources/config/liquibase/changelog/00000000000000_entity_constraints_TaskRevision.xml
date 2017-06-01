@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="20170530224407-2" author="nexidan">
+
+        <addForeignKeyConstraint baseColumnNames="task_id"
+                                 baseTableName="task_revision"
+                                 constraintName="fk_task_revision_task_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="task"/>
+
+        <addForeignKeyConstraint baseColumnNames="parent_task_id"
+                                 baseTableName="task_revision"
+                                 constraintName="fk_task_revision_parent_task_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="task"/>
+
+        <addForeignKeyConstraint baseColumnNames="sprint_id"
+                                 baseTableName="task_revision"
+                                 constraintName="fk_task_revision_sprint_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="sprint"/>
+
+        <addForeignKeyConstraint baseColumnNames="project_id"
+                                 baseTableName="task_revision"
+                                 constraintName="fk_task_revision_project_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="project"/>
+
+        <addForeignKeyConstraint baseColumnNames="author_id"
+                                 baseTableName="task_revision"
+                                 constraintName="fk_task_revision_author_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"/>
+
+        <addForeignKeyConstraint baseColumnNames="assignee_id"
+                                 baseTableName="task_revision"
+                                 constraintName="fk_task_revision_assignee_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"/>
+
+        <addForeignKeyConstraint baseColumnNames="task_revisions_id"
+                                 baseTableName="task_revision_watcher"
+                                 constraintName="fk_task_revision_watcher_task_revisions_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="task_revision"/>
+        <addForeignKeyConstraint baseColumnNames="watchers_id"
+                                 baseTableName="task_revision_watcher"
+                                 constraintName="fk_task_revision_watcher_watchers_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"/>
+
+        <addForeignKeyConstraint baseColumnNames="task_revisions_id"
+                                 baseTableName="task_revision_tag"
+                                 constraintName="fk_task_revision_tag_task_revisions_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="task_revision"/>
+        <addForeignKeyConstraint baseColumnNames="tags_id"
+                                 baseTableName="task_revision_tag"
+                                 constraintName="fk_task_revision_tag_tags_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tag"/>
+
+    </changeSet>
+</databaseChangeLog>

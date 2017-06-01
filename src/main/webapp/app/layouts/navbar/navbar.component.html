@@ -1,0 +1,84 @@
+<nav class="navbar navbar-default navbar-toggleable-md app-navbar">
+    <div class="app-logo-container float-left">
+        <a class="app-navbar-toggler hidden-lg-up float-right" href="javascript:void(0);" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
+            <i class="fa fa-bars"></i>
+        </a>
+        <a class="navbar-brand logo float-left" routerLink="/" (click)="collapseNavbar()">
+            <span class="navbar-title">Spp</span>
+        </a>
+    </div>
+    <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+
+            <li class="nav-item"  routerLinkActive="active">
+                <a class="nav-link" routerLink="project" (click)="collapseNavbar()">
+                    <span>Project</span>
+                </a>
+            </li>
+            <li class="nav-item"  routerLinkActive="active">
+                <a class="nav-link" routerLink="tag" (click)="collapseNavbar()">
+                    <span>Tag</span>
+                </a>
+            </li>
+            <li class="nav-item"  routerLinkActive="active">
+                <a class="nav-link" routerLink="sprint" (click)="collapseNavbar()">
+                    <span>Sprint</span>
+                </a>
+            </li>
+            <li class="nav-item"  routerLinkActive="active">
+                <a class="nav-link" routerLink="task" (click)="collapseNavbar()">
+                    <span>Task</span>
+                </a>
+            </li>
+            <li *appHasAnyAuthority="'ROLE_ADMIN'" class="nav-item dropdown pointer" routerLinkActive="active">
+                <a class="nav-link" routerLink="user-management" (click)="collapseNavbar()">
+                    <span>Users</span>
+                </a>
+            </li>
+            <li ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
+                  <span>
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <span>
+                      Account
+                    </span>
+                    <b class="caret"></b>
+                  </span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
+                    <li *ngSwitchCase="true">
+                        <a class="dropdown-item" routerLink="settings" routerLinkActive="active" (click)="collapseNavbar()">
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li *ngSwitchCase="true">
+                        <a class="dropdown-item" routerLink="password" routerLinkActive="active" (click)="collapseNavbar()">
+                            <span>Password</span>
+                        </a>
+                    </li>
+                    <li *ngSwitchCase="true">
+                        <a class="dropdown-item" (click)="logout()" id="logout">
+                            <span>Sign out</span>
+                        </a>
+                    </li>
+                    <li *ngSwitchCase="false">
+                        <a class="dropdown-item" (click)="login()" id="login">
+                            <span>Sign in</span>
+                        </a>
+                    </li>
+                    <li *ngSwitchCase="false">
+                        <a class="dropdown-item" routerLink="register" routerLinkActive="active" (click)="collapseNavbar()">
+                            <span>Register</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
