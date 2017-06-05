@@ -32,23 +32,14 @@
         </div>
         <div class="form-group">
             <label class="form-control-label" for="field_status">Status</label>
-            <select class="form-control" name="status" [(ngModel)]="task.status" id="field_status" >
-                <option value="OPEN">OPEN</option>
-                <option value="NEED_INFO">NEED_INFO</option>
-                <option value="IN_PROGRESS">IN_PROGRESS</option>
-                <option value="ON_REVIEW">ON_REVIEW</option>
-                <option value="READY_FOR_RELEASE">READY_FOR_RELEASE</option>
-                <option value="CLOSED">CLOSED</option>
-                <option value="WONT_FIX">WONT_FIX</option>
+            <select class="form-control" name="status" [(ngModel)]="task.status" id="field_status" required>
+                <option *ngFor="let status of taskStatus" [value]="status">{{status}}</option>
             </select>
         </div>
         <div class="form-group">
             <label class="form-control-label" for="field_priority">Priority</label>
-            <select class="form-control" name="priority" [(ngModel)]="task.priority" id="field_priority" >
-                <option value="LOW">LOW</option>
-                <option value="MEDIUM">MEDIUM</option>
-                <option value="HIGH">HIGH</option>
-                <option value="CRITICAL">CRITICAL</option>
+            <select class="form-control" name="priority" [(ngModel)]="task.priority" id="field_priority" required>
+                <option *ngFor="let priority of taskPriority" [value]="priority">{{priority}}</option>
             </select>
         </div>
 
@@ -56,7 +47,7 @@
             <label for="field_parentTask">Parent Task</label>
             <select class="form-control" id="field_parentTask" name="parentTask" [(ngModel)]="task.parentTask" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="taskOption.id === task.parentTask?.id ? task.parentTask : taskOption" *ngFor="let taskOption of tasks; trackBy: trackTaskById">{{taskOption.id}}</option>
+                <option [ngValue]="taskOption.id === task.parentTask?.id ? task.parentTask : taskOption" *ngFor="let taskOption of tasks; trackBy: trackTaskById">{{taskOption.name}}</option>
             </select>
         </div>
         <div class="form-group">
@@ -68,16 +59,9 @@
         </div>
         <div class="form-group">
             <label for="field_project">Project</label>
-            <select class="form-control" id="field_project" name="project" [(ngModel)]="task.project" >
+            <select class="form-control" id="field_project" name="project" [(ngModel)]="task.project" required>
                 <option [ngValue]="null"></option>
                 <option [ngValue]="projectOption.id === task.project?.id ? task.project : projectOption" *ngFor="let projectOption of projects; trackBy: trackProjectById">{{projectOption.name}}</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="field_author">Author</label>
-            <select class="form-control" id="field_author" name="author" [(ngModel)]="task.author" >
-                <option [ngValue]="null"></option>
-                <option [ngValue]="userOption.id === task.author?.id ? task.author : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
             </select>
         </div>
         <div class="form-group">

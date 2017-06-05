@@ -42,6 +42,9 @@ export const projectRoute: Routes = [
     }, {
         path: 'project/:id',
         component: ProjectDetailComponent,
+        resolve: {
+            'pagingParams': ProjectResolvePagingParams
+        },
         data: {
             authorities: ['ROLE_USER'],
             pageTitle: 'Projects'

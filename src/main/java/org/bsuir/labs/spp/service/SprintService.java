@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class SprintService {
@@ -30,11 +32,16 @@ public class SprintService {
 
     @Transactional(readOnly = true)
     public Sprint findOne(Long id) {
-        Sprint sprint = sprintRepository.findOne(id);
+        Sprint sprint = sprintRepository.findOneWithEagerRelationships(id);
         return sprint;
     }
 
     public void delete(Long id) {
         sprintRepository.delete(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Sprint> findAllByProjectId(Long projectId) {
+        return sprintRepository.findAllByProjectId(projectId);
     }
 }

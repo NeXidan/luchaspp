@@ -27,7 +27,7 @@
 
         <div class="form-group">
             <label for="field_project">Project</label>
-            <select class="form-control" id="field_project" name="project" [(ngModel)]="tag.project" >
+            <select class="form-control" id="field_project" name="project" [(ngModel)]="tag.project" required>
                 <option [ngValue]="null"></option>
                 <option [ngValue]="projectOption.id === tag.project?.id ? tag.project : projectOption" *ngFor="let projectOption of projects; trackBy: trackProjectById">{{projectOption.name}}</option>
             </select>

@@ -16,22 +16,22 @@
                 </a>
             </li>
 
-            <li class="nav-item"  routerLinkActive="active">
+            <li *appHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active">
                 <a class="nav-link" routerLink="project" (click)="collapseNavbar()">
                     <span>Project</span>
                 </a>
             </li>
-            <li class="nav-item"  routerLinkActive="active">
+            <li *appHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active">
                 <a class="nav-link" routerLink="tag" (click)="collapseNavbar()">
                     <span>Tag</span>
                 </a>
             </li>
-            <li class="nav-item"  routerLinkActive="active">
+            <li *appHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active">
                 <a class="nav-link" routerLink="sprint" (click)="collapseNavbar()">
                     <span>Sprint</span>
                 </a>
             </li>
-            <li class="nav-item"  routerLinkActive="active">
+            <li *appHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active">
                 <a class="nav-link" routerLink="task" (click)="collapseNavbar()">
                     <span>Task</span>
                 </a>

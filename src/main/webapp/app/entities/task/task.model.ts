@@ -1,5 +1,4 @@
-
-const enum TaskStatus {
+export const TaskStatus = [
     'OPEN',
     'NEED_INFO',
     'IN_PROGRESS',
@@ -7,16 +6,15 @@ const enum TaskStatus {
     'READY_FOR_RELEASE',
     'CLOSED',
     'WONT_FIX'
+];
 
-};
-
-const enum Priority {
+export const TaskPriority = [
     'LOW',
     'MEDIUM',
     'HIGH',
     'CRITICAL'
+];
 
-};
 import { Sprint } from '../sprint';
 import { Project } from '../project';
 import { User } from '../../shared';
@@ -26,8 +24,8 @@ export class Task {
         public id?: number,
         public name?: string,
         public description?: string,
-        public status?: TaskStatus,
-        public priority?: Priority,
+        public status = 'OPEN',
+        public priority = 'LOW',
         public createdAt?: any,
         public updatedAt?: any,
         public parentTask?: Task,

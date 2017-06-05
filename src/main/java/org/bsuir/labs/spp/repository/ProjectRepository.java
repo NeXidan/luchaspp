@@ -17,5 +17,4 @@ public interface ProjectRepository extends JpaRepository<Project,Long> {
 
     @Query("select project from Project project left join fetch project.managers where project.id =:id")
     Project findOneWithEagerRelationships(@Param("id") Long id);
-
 }

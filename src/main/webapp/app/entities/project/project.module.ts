@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 
 import { SppSharedModule } from '../../shared';
 import { SppAdminModule } from '../../admin/admin.module';
+import { SppTaskModule } from '../task/task.module';
 import {
     ProjectService,
     ProjectPopupService,
@@ -26,6 +27,7 @@ const ENTITY_STATES = [
     imports: [
         SppSharedModule,
         SppAdminModule,
+        SppTaskModule,
         RouterModule.forRoot(ENTITY_STATES, {useHash: true})
     ],
     declarations: [

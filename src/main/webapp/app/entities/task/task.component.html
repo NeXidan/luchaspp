@@ -1,6 +1,11 @@
 <div>
     <h2>
-        <span>Tasks</span>
+        <span>
+            {{project ? "Project " : null}}
+            {{sprint ? "Sprint " : null}}
+            {{parentTask ? "Child " : null}}
+            Tasks
+        </span>
         <button class="btn btn-link float-right create-task" [routerLink]="['/', { outlets: { popup: ['task-new'] } }]">
             <span class="fa fa-plus"></span>
         </button>
@@ -17,8 +22,6 @@
             <th><span>Description</span></th>
             <th><span>Status</span></th>
             <th><span>Priority</span></th>
-            <th><span>Created At</span></th>
-            <th><span>Updated At</span></th>
             <th><span>Parent Task</span></th>
             <th><span>Sprint</span></th>
             <th><span>Project</span></th>
@@ -29,25 +32,23 @@
             </thead>
             <tbody>
             <tr *ngFor="let task of tasks ;trackBy: trackId">
-                <td><a [routerLink]="['../task', task.id ]">{{task.name}}</a></td>
+                <td><a [routerLink]="['/task', task.id ]">{{task.name}}</a></td>
                 <td>{{task.description}}</td>
                 <td>{{task.status}}</td>
                 <td>{{task.priority}}</td>
-                <td>{{task.createdAt | date:'mediumDate'}}</td>
-                <td>{{task.updatedAt | date:'mediumDate'}}</td>
                 <td>
                     <div *ngIf="task.parentTask">
-                        <a [routerLink]="['../task', task.parentTask?.id ]" >{{task.parentTask?.name}}</a>
+                        <a [routerLink]="['/task', task.parentTask?.id ]" >{{task.parentTask?.name}}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="task.sprint">
-                        <a [routerLink]="['../sprint', task.sprint?.id ]" >{{task.sprint?.name}}</a>
+                        <a [routerLink]="['/sprint', task.sprint?.id ]" >{{task.sprint?.name}}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="task.project">
-                        <a [routerLink]="['../project', task.project?.id ]" >{{task.project?.name}}</a>
+                        <a [routerLink]="['/project', task.project?.id ]" >{{task.project?.name}}</a>
                     </div>
                 </td>
                 <td>

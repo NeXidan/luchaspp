@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class TagService {
@@ -29,8 +31,13 @@ public class TagService {
     }
 
     @Transactional(readOnly = true)
+    public List<Tag> findAllByProjectId(Long projectId) {
+        return tagRepository.findAllByProjectId(projectId);
+    }
+
+    @Transactional(readOnly = true)
     public Tag findOne(Long id) {
-        Tag tag = tagRepository.findOne(id);
+        Tag tag = tagRepository.findOneWithEagerRelationships(id);
         return tag;
     }
 

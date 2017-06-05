@@ -54,6 +54,10 @@ export class UserMgmtDialogComponent implements OnInit {
     private onSaveError() {
         this.isSaving = false;
     }
+
+    compareAuthority(val1, val2): boolean {
+        return val1 && val2 ? val1.name === val2.name : val1 === val2;
+    }
 }
 
 @Component({

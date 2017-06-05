@@ -42,6 +42,9 @@ export const sprintRoute: Routes = [
     }, {
         path: 'sprint/:id',
         component: SprintDetailComponent,
+        resolve: {
+            'pagingParams': SprintResolvePagingParams
+        },
         data: {
             authorities: ['ROLE_USER'],
             pageTitle: 'Sprints'

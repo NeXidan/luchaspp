@@ -1,9 +1,14 @@
 package org.bsuir.labs.spp.security;
 
+import org.bsuir.labs.spp.domain.User;
+import org.bsuir.labs.spp.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Optional;
 
 public final class SecurityUtils {
 
@@ -49,9 +54,8 @@ public final class SecurityUtils {
     public static boolean isCurrentUserInRole(String authority) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
-        System.out.println(authentication);
+
         if (authentication != null) {
-            System.out.println(authentication.getAuthorities());
             return authentication.getAuthorities().stream()
                 .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(authority));
         }

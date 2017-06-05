@@ -27,9 +27,10 @@ public class Project implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private ProjectStatus status;
+    private ProjectStatus status = ProjectStatus.DEVELOPING;
 
     @ManyToMany
     @JoinTable(name = "project_manager",

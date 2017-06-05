@@ -3,6 +3,7 @@ package org.bsuir.labs.spp.domain;
 
 import org.bsuir.labs.spp.domain.enumeration.Priority;
 import org.bsuir.labs.spp.domain.enumeration.TaskStatus;
+import org.bsuir.labs.spp.security.SecurityUtils;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -32,13 +33,15 @@ public class Task implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private TaskStatus status;
+    private TaskStatus status = TaskStatus.OPEN;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "priority")
-    private Priority priority;
+    private Priority priority = Priority.LOW;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false)
@@ -54,6 +57,7 @@ public class Task implements Serializable {
     @ManyToOne
     private Sprint sprint;
 
+    @NotNull
     @ManyToOne
     private Project project;
 

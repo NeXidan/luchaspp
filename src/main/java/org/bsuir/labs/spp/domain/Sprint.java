@@ -29,6 +29,7 @@ public class Sprint implements Serializable {
     @Column(name = "to_date", nullable = false)
     private LocalDate toDate;
 
+    @NotNull
     @ManyToOne
     private Project project;
 

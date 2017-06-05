@@ -5,6 +5,7 @@ import org.bsuir.labs.spp.SppApp;
 import org.bsuir.labs.spp.domain.Task;
 import org.bsuir.labs.spp.repository.TaskRepository;
 import org.bsuir.labs.spp.service.TaskService;
+import org.bsuir.labs.spp.service.UserService;
 import org.bsuir.labs.spp.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -57,6 +58,9 @@ public class TaskResourceIntTest {
     private TaskService taskService;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -75,7 +79,7 @@ public class TaskResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        TaskResource taskResource = new TaskResource(taskService);
+        TaskResource taskResource = new TaskResource(taskService, userService);
         this.restTaskMockMvc = MockMvcBuilders.standaloneSetup(taskResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

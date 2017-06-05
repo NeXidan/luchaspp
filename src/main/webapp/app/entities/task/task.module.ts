@@ -48,6 +48,7 @@ const ENTITY_STATES = [
         TaskPopupService,
         TaskResolvePagingParams,
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    exports: [TaskComponent]
 })
 export class SppTaskModule {}

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Rx';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EventManager, AlertService } from 'ng-jhipster';
 
-import { Task } from './task.model';
+import { Task, TaskPriority, TaskStatus } from './task.model';
 import { TaskPopupService } from './task-popup.service';
 import { TaskService } from './task.service';
 import { Sprint, SprintService } from '../sprint';
@@ -20,6 +20,9 @@ import { ResponseWrapper } from '../../shared';
     templateUrl: './task-dialog.component.html'
 })
 export class TaskDialogComponent implements OnInit {
+
+    taskStatus = TaskStatus;
+    taskPriority = TaskPriority;
 
     task: Task;
     authorities: any[];
@@ -48,17 +51,19 @@ export class TaskDialogComponent implements OnInit {
     }
 
     ngOnInit() {
+        const project = this.task.project ? this.task.project.id : null;
+
         this.isSaving = false;
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
         this.taskService.query()
             .subscribe((res: ResponseWrapper) => { this.tasks = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.sprintService.query()
+        this.sprintService.query({project})
             .subscribe((res: ResponseWrapper) => { this.sprints = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.projectService.query()
             .subscribe((res: ResponseWrapper) => { this.projects = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.userService.query()
             .subscribe((res: ResponseWrapper) => { this.users = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.tagService.query()
+        this.tagService.query({project})
             .subscribe((res: ResponseWrapper) => { this.tags = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
     clear() {

@@ -32,13 +32,15 @@ public class TaskRevision implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private TaskStatus status;
+    private TaskStatus status = TaskStatus.OPEN;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "priority")
-    private Priority priority;
+    private Priority priority = Priority.LOW;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false)
@@ -48,6 +50,7 @@ public class TaskRevision implements Serializable {
     @Column(name = "updated_at")
     private Instant updatedAt = Instant.now();
 
+    @NotNull
     @ManyToOne
     private Task task;
 
@@ -57,6 +60,7 @@ public class TaskRevision implements Serializable {
     @ManyToOne
     private Sprint sprint;
 
+    @NotNull
     @ManyToOne
     private Project project;
 

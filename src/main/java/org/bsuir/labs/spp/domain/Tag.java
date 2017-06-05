@@ -23,6 +23,7 @@ public class Tag implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @NotNull
     @ManyToOne
     private Project project;
 

@@ -5,6 +5,7 @@ import org.bsuir.labs.spp.SppApp;
 import org.bsuir.labs.spp.domain.Project;
 import org.bsuir.labs.spp.repository.ProjectRepository;
 import org.bsuir.labs.spp.service.ProjectService;
+import org.bsuir.labs.spp.service.UserService;
 import org.bsuir.labs.spp.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;

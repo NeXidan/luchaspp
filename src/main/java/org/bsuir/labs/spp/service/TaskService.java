@@ -43,4 +43,19 @@ public class TaskService {
         taskRepository.delete(id);
         taskRevisionRepository.delete(taskRevisionRepository.findByTaskId(id));
     }
+
+    @Transactional(readOnly = true)
+    public Page<Task> findAllByParentTaskId(Pageable pageable, Long parentTaskId) {
+        return taskRepository.findAllByParentTaskId(pageable, parentTaskId);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Task> findAllBySprintId(Pageable pageable, Long sprintId) {
+        return taskRepository.findAllBySprintId(pageable, sprintId);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Task> findAllByProjectId(Pageable pageable, Long projectId) {
+        return taskRepository.findAllByProjectId(pageable, projectId);
+    }
 }

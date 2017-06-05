@@ -2,6 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { SppSharedModule } from '../../shared';
+import { SppTaskModule } from '../task/task.module';
 import {
     SprintService,
     SprintPopupService,
@@ -24,6 +25,7 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         SppSharedModule,
+        SppTaskModule,
         RouterModule.forRoot(ENTITY_STATES, {useHash: true})
     ],
     declarations: [

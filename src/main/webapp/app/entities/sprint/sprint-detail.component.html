@@ -24,16 +24,21 @@
         </dd>
     </dl>
 
-    <button type="submit"
-            (click)="previousState()"
-            class="btn btn-link">
-        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
-    </button>
+    <div class="btn-toolbar btn-detail-toolbar">
+        <button type="submit"
+                (click)="previousState()"
+                class="btn btn-link">
+            <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+        </button>
 
-    <button type="button"
-            [routerLink]="['/', { outlets: { popup: 'sprint/'+ sprint.id + '/edit'} }]"
-            replaceUrl="true"
-            class="btn btn-link">
-        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
-    </button>
+        <button type="button"
+                [routerLink]="['/', { outlets: { popup: 'sprint/'+ sprint.id + '/edit'} }]"
+                replaceUrl="true"
+                class="btn btn-link">
+            <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+        </button>
+    </div>
+    <hr>
+    <app-task [sprint]="sprint"></app-task>
+
 </div>

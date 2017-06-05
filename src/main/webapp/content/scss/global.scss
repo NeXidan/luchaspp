@@ -184,5 +184,9 @@ a:hover {
     outline: none;
 }
 
-
-/* jhipster-needle-scss-add-main JHipster will add new css style */
+.btn-detail-toolbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

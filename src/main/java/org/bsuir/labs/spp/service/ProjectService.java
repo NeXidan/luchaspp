@@ -12,8 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class ProjectService {
-    private final Logger log = LoggerFactory.getLogger(ProjectService.class);
-
     private final ProjectRepository projectRepository;
 
     public ProjectService(ProjectRepository projectRepository) {

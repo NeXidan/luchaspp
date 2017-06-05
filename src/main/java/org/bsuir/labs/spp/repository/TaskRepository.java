@@ -4,6 +4,8 @@ import org.bsuir.labs.spp.domain.Sprint;
 import org.bsuir.labs.spp.domain.Task;
 import org.bsuir.labs.spp.domain.TaskRevision;
 import org.bsuir.labs.spp.domain.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,7 +26,7 @@ public interface TaskRepository extends JpaRepository<Task,Long> {
     @Query("select distinct task from Task task left join fetch task.watchers left join fetch task.tags")
     List<Task> findAllWithEagerRelationships();
 
-    @Query("select task from Task task left join fetch task.watchers left join fetch task.tags where task.id =:id")
+    @Query("select task from Task task left join fetch task.watchers left join fetch task.tags left join fetch task.project project left join fetch project.managers where task.id =:id")
     Task findOneWithEagerRelationships(@Param("id") Long id);
 
     List<Task> findByAssignee(User user);
@@ -32,4 +34,10 @@ public interface TaskRepository extends JpaRepository<Task,Long> {
     List<Task> findBySprint(Sprint sprint);
 
     List<Task> findByProjectId(Long id);
+
+    Page<Task> findAllByParentTaskId(Pageable pageable, Long parentTaskId);
+
+    Page<Task> findAllBySprintId(Pageable pageable, Long sprintId);
+
+    Page<Task> findAllByProjectId(Pageable pageable, Long projectId);
 }

@@ -42,7 +42,6 @@ public class UserService {
     }
 
     public User createUser(String login, String password, String firstName, String lastName, String email) {
-
         User newUser = new User();
         Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
         Set<Authority> authorities = new HashSet<>();

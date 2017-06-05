@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Rx';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EventManager, AlertService } from 'ng-jhipster';
 
-import { Project } from './project.model';
+import { Project, ProjectStatus } from './project.model';
 import { ProjectPopupService } from './project-popup.service';
 import { ProjectService } from './project.service';
 import { User, UserService } from '../../shared';
@@ -18,6 +18,7 @@ import { ResponseWrapper } from '../../shared';
 })
 export class ProjectDialogComponent implements OnInit {
 
+    projectStatus = ProjectStatus;
     project: Project;
     authorities: any[];
     isSaving: boolean;

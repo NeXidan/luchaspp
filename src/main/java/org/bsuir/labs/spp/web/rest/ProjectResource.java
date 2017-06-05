@@ -4,7 +4,11 @@ import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
 import org.bsuir.labs.spp.domain.Project;
+import org.bsuir.labs.spp.domain.User;
+import org.bsuir.labs.spp.security.AuthoritiesConstants;
+import org.bsuir.labs.spp.security.SecurityUtils;
 import org.bsuir.labs.spp.service.ProjectService;
+import org.bsuir.labs.spp.service.UserService;
 import org.bsuir.labs.spp.web.rest.util.HeaderUtil;
 import org.bsuir.labs.spp.web.rest.util.PaginationUtil;
 import org.springframework.data.domain.Page;
@@ -19,6 +23,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -50,6 +55,14 @@ public class ProjectResource {
         if (project.getId() == null) {
             return createProject(project);
         }
+
+        if (!SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            String login = SecurityUtils.getCurrentUserLogin();
+            if (!project.getManagers().stream().map(User::getLogin).collect(Collectors.toList()).contains(login)) {
+                return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "norights", "You have no rights to edit this project")).body(null);
+            }
+        }
+
         Project result = projectService.save(project);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, project.getId().toString()))
@@ -74,6 +87,14 @@ public class ProjectResource {
     @DeleteMapping("/projects/{id}")
     @Timed
     public ResponseEntity<Void> deleteProject(@PathVariable Long id) {
+        if (!SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            Project project = projectService.findOne(id);
+            String login = SecurityUtils.getCurrentUserLogin();
+            if (!project.getManagers().stream().map(User::getLogin).collect(Collectors.toList()).contains(login)) {
+                return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "norights", "You have no rights to edit this project")).body(null);
+            }
+        }
+
         projectService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }

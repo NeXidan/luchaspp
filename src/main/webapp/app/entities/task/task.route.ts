@@ -42,6 +42,9 @@ export const taskRoute: Routes = [
     }, {
         path: 'task/:id',
         component: TaskDetailComponent,
+        resolve: {
+            'pagingParams': TaskResolvePagingParams
+        },
         data: {
             authorities: ['ROLE_USER'],
             pageTitle: 'Tasks'

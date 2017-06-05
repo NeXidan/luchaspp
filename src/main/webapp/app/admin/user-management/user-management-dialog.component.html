@@ -96,7 +96,7 @@
 
         <div class="form-group">
             <label>Profiles</label>
-            <select class="form-control" multiple name="authority" [(ngModel)]="user.authorities">
+            <select class="form-control" multiple name="authority" [(ngModel)]="user.authorities" [compareWith]="compareAuthority">
                 <option *ngFor="let authority of authorities" [value]="{name: authority}">{{authority}}</option>
             </select>
         </div>
