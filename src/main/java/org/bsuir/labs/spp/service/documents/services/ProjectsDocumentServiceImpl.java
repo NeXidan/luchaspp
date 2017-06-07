@@ -51,11 +51,11 @@ public class ProjectsDocumentServiceImpl extends BaseDocumentService implements 
             PdfWriter writer = preparePdfGenerating("Projects statistics", response, lock, "Id", "Name", "Description", "Status", "Managers");
 
             for (ProjectStatisticDTO projectData: data) {
-                this.pdfTable.addCell(String.valueOf(projectData.getId()));
-                this.pdfTable.addCell(projectData.getName());
-                this.pdfTable.addCell(projectData.getDescription());
-                this.pdfTable.addCell(String.valueOf(projectData.getStatus()));
-                this.pdfTable.addCell(String.valueOf(projectData.getManagers()));
+                this.addCell(String.valueOf(projectData.getId()));
+                this.addCell(projectData.getName());
+                this.addCell(projectData.getDescription());
+                this.addCell(String.valueOf(projectData.getStatus()));
+                this.addCell(String.valueOf(projectData.getManagers()));
             }
 
             finishPdfGenerating();
@@ -86,11 +86,21 @@ public class ProjectsDocumentServiceImpl extends BaseDocumentService implements 
         font.setColor(HSSFColor.WHITE.index);
         style.setFont(font);
 
-        HSSFRow header = sheet.createRow(0);
+        sheet.setColumnWidth(0, 256 * 4);
+        sheet.setColumnWidth(1, 256 * 10);
+        sheet.setColumnWidth(2, 256 * 40);
+        sheet.setColumnWidth(3, 256 * 14);
+        sheet.setColumnWidth(4, 256 * 20);
+
+        HSSFRow row = sheet.createRow(0);
+        row.createCell(0).setCellValue("Projects statistics");
+
+
+        HSSFRow header = sheet.createRow(1);
 
         setXlsHeaders(header, style, "Id", "Name", "Description", "Status", "Managers");
 
-        int rowCount = 1;
+        int rowCount = 2;
 
         for (ProjectStatisticDTO projectData: data) {
             HSSFRow aRow = sheet.createRow(rowCount++);

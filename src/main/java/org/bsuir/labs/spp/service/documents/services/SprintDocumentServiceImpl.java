@@ -50,12 +50,12 @@ public class SprintDocumentServiceImpl extends BaseDocumentService implements Sp
             PdfWriter writer = preparePdfGenerating("Sprints statistics", response, lock, "Id", "Name", "Project", "From", "To", "Tasks");
 
             for (SprintStatisticDTO sprintData: data) {
-                this.pdfTable.addCell(String.valueOf(sprintData.getId()));
-                this.pdfTable.addCell(sprintData.getName());
-                this.pdfTable.addCell(sprintData.getProject());
-                this.pdfTable.addCell(String.valueOf(sprintData.getFromDate()));
-                this.pdfTable.addCell(String.valueOf(sprintData.getToDate()));
-                this.pdfTable.addCell(String.valueOf(sprintData.getTasks()));
+                this.addCell(String.valueOf(sprintData.getId()));
+                this.addCell(sprintData.getName());
+                this.addCell(sprintData.getProject());
+                this.addCell(String.valueOf(sprintData.getFromDate()));
+                this.addCell(String.valueOf(sprintData.getToDate()));
+                this.addCell(String.valueOf(sprintData.getTasks()));
             }
 
             finishPdfGenerating();
@@ -86,11 +86,25 @@ public class SprintDocumentServiceImpl extends BaseDocumentService implements Sp
         font.setColor(HSSFColor.WHITE.index);
         style.setFont(font);
 
-        HSSFRow header = sheet.createRow(0);
+        sheet.setColumnWidth(0, 256 * 4);
+        sheet.setColumnWidth(1, 256 * 10);
+        sheet.setColumnWidth(2, 256 * 10);
+        sheet.setColumnWidth(3, 256 * 12);
+        sheet.setColumnWidth(4, 256 * 12);
+        sheet.setColumnWidth(5, 256 * 25);
+
+
+        CellStyle wrapStyle = workbook.createCellStyle();
+        wrapStyle.setWrapText(true);
+
+        HSSFRow row = sheet.createRow(0);
+        row.createCell(0).setCellValue("Sprints statistics");
+
+        HSSFRow header = sheet.createRow(1);
 
         setXlsHeaders(header, style, "Id", "Name", "Project", "From", "To", "Tasks");
 
-        int rowCount = 1;
+        int rowCount = 2;
 
         for (SprintStatisticDTO usersData: data) {
             HSSFRow aRow = sheet.createRow(rowCount++);
@@ -100,6 +114,8 @@ public class SprintDocumentServiceImpl extends BaseDocumentService implements Sp
             aRow.createCell(3).setCellValue(String.valueOf(usersData.getFromDate()));
             aRow.createCell(4).setCellValue(String.valueOf(usersData.getToDate()));
             aRow.createCell(5).setCellValue(String.valueOf(usersData.getTasks()));
+            aRow.setHeightInPoints((String.valueOf(usersData.getTasks()).length() / 25) * sheet.getDefaultRowHeightInPoints());
+            aRow.getCell(5).setCellStyle(wrapStyle);
         }
 
         try {

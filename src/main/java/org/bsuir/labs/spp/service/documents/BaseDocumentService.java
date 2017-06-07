@@ -62,8 +62,8 @@ public class BaseDocumentService{
     }
 
     protected Font getFont() {
-        Font font = FontFactory.getFont(FontFactory.HELVETICA);
-        font.setColor(BaseColor.WHITE);
+        Font font = FontFactory.getFont("/Users/nexidan/git/some3/src/main/resources/Arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        font.setColor(BaseColor.BLACK);
 
         return font;
     }
@@ -77,6 +77,11 @@ public class BaseDocumentService{
         }
     }
 
+    protected void addCell(String text) {
+        Font font = getFont();
+        pdfTable.addCell(new Phrase(text, font));
+    }
+
     protected void setXlsHeaders(HSSFRow header, CellStyle style, String ... headers) {
         Integer i = 0;
         for (String head : headers) {
@@ -87,7 +92,7 @@ public class BaseDocumentService{
     }
 
     protected void addPdfMetadata(Document document) {
-        document.addAuthor("Batya Production 85");
+        document.addAuthor("Spp tracker");
         document.addTitle("Report");
     }
 

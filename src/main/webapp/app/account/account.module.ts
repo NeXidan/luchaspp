@@ -8,7 +8,6 @@ import {
     Password,
     RegisterComponent,
     PasswordComponent,
-    SettingsComponent,
     accountState
 } from './';
 
@@ -19,8 +18,7 @@ import {
     ],
     declarations: [
         RegisterComponent,
-        PasswordComponent,
-        SettingsComponent
+        PasswordComponent
     ],
     providers: [
         Register,

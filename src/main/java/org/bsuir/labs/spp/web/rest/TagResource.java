@@ -43,12 +43,6 @@ public class TagResource {
         if (tag.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new tag cannot already have an ID")).body(null);
         }
-        if (!SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
-            String login = SecurityUtils.getCurrentUserLogin();
-            if (!tag.getProject().getManagers().stream().map(User::getLogin).collect(Collectors.toList()).contains(login)) {
-                return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "norights", "You have no rights to create tag")).body(null);
-            }
-        }
         Tag result = tagService.save(tag);
         return ResponseEntity.created(new URI("/api/tags/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

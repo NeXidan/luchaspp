@@ -43,12 +43,6 @@ public class SprintResource {
         if (sprint.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new sprint cannot already have an ID")).body(null);
         }
-        if (!SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
-            String login = SecurityUtils.getCurrentUserLogin();
-            if (!sprint.getProject().getManagers().stream().map(User::getLogin).collect(Collectors.toList()).contains(login)) {
-                return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "norights", "You have no rights to create sprint")).body(null);
-            }
-        }
         Sprint result = sprintService.save(sprint);
         return ResponseEntity.created(new URI("/api/sprints/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))

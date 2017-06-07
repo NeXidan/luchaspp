@@ -6,6 +6,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
 import org.bsuir.labs.spp.service.documents.BaseDocumentService;
@@ -58,14 +59,14 @@ public class ProjectDocumentServiceImpl extends BaseDocumentService implements P
             PdfWriter writer = preparePdfGenerating("Project statistics", response, lock, "Id", "Name", "Description", "Status", "Priority", "Sprint", "Project", "Assignee");
 
             for (TaskStatisticDTO taskData: data) {
-                this.pdfTable.addCell(String.valueOf(taskData.getId()));
-                this.pdfTable.addCell(taskData.getName());
-                this.pdfTable.addCell(taskData.getDescription());
-                this.pdfTable.addCell(String.valueOf(taskData.getStatus()));
-                this.pdfTable.addCell(String.valueOf(taskData.getPriority()));
-                this.pdfTable.addCell(taskData.getSprint());
-                this.pdfTable.addCell(taskData.getProject());
-                this.pdfTable.addCell(taskData.getAssignee());
+                this.addCell(String.valueOf(taskData.getId()));
+                this.addCell(taskData.getName());
+                this.addCell(taskData.getDescription());
+                this.addCell(String.valueOf(taskData.getStatus()));
+                this.addCell(String.valueOf(taskData.getPriority()));
+                this.addCell(taskData.getSprint());
+                this.addCell(taskData.getProject());
+                this.addCell(taskData.getAssignee());
             }
 
             finishPdfGenerating();
@@ -96,14 +97,32 @@ public class ProjectDocumentServiceImpl extends BaseDocumentService implements P
         font.setColor(HSSFColor.WHITE.index);
         style.setFont(font);
 
-        HSSFRow header = sheet.createRow(0);
+        CellStyle wrapStyle = workbook.createCellStyle();
+        wrapStyle.setWrapText(true);
+
+        sheet.setColumnWidth(0, 256 * 4);
+        sheet.setColumnWidth(1, 256 * 25);
+        sheet.setColumnWidth(2, 256 * 40);
+        sheet.setColumnWidth(3, 256 * 12);
+        sheet.setColumnWidth(4, 256 * 8);
+        sheet.setColumnWidth(5, 256 * 10);
+        sheet.setColumnWidth(6, 256 * 10);
+        sheet.setColumnWidth(7, 256 * 10);
+
+
+        HSSFRow row = sheet.createRow(0);
+        row.createCell(0).setCellValue("Project statistics");
+
+
+        HSSFRow header = sheet.createRow(1);
 
         setXlsHeaders(header, style, "Id", "Name", "Description", "Status", "Priority", "Sprint", "Project", "Assignee");
 
-        int rowCount = 1;
+        int rowCount = 2;
 
         for (TaskStatisticDTO taskData: data) {
             HSSFRow aRow = sheet.createRow(rowCount++);
+
             aRow.createCell(0).setCellValue(String.valueOf(taskData.getId()));
             aRow.createCell(1).setCellValue(taskData.getName());
             aRow.createCell(2).setCellValue(taskData.getDescription());
@@ -112,6 +131,8 @@ public class ProjectDocumentServiceImpl extends BaseDocumentService implements P
             aRow.createCell(5).setCellValue(taskData.getSprint());
             aRow.createCell(6).setCellValue(taskData.getProject());
             aRow.createCell(7).setCellValue(taskData.getAssignee());
+            aRow.setHeightInPoints((taskData.getDescription().length() / 40) * sheet.getDefaultRowHeightInPoints());
+            aRow.getCell(2).setCellStyle(wrapStyle);
         } try {
             workbook.write(response.getOutputStream());
         }

@@ -50,11 +50,11 @@ public class UserDocumentServiceImpl extends BaseDocumentService implements User
             PdfWriter writer = preparePdfGenerating("Users statistics", response, lock, "Id", "Full Name", "Open", "In progress", "Closed");
 
             for (UserStatisticDTO usersData: data) {
-                this.pdfTable.addCell(String.valueOf(usersData.getId()));
-                this.pdfTable.addCell(usersData.getFullName());
-                this.pdfTable.addCell(String.valueOf(usersData.getOpenTasks()));
-                this.pdfTable.addCell(String.valueOf(usersData.getProgressTasks()));
-                this.pdfTable.addCell(String.valueOf(usersData.getCompletedTasks()));
+                this.addCell(String.valueOf(usersData.getId()));
+                this.addCell(usersData.getFullName());
+                this.addCell(String.valueOf(usersData.getOpenTasks()));
+                this.addCell(String.valueOf(usersData.getProgressTasks()));
+                this.addCell(String.valueOf(usersData.getCompletedTasks()));
             }
 
             finishPdfGenerating();
@@ -85,11 +85,20 @@ public class UserDocumentServiceImpl extends BaseDocumentService implements User
         font.setColor(HSSFColor.WHITE.index);
         style.setFont(font);
 
-        HSSFRow header = sheet.createRow(0);
+        sheet.setColumnWidth(0, 256 * 4);
+        sheet.setColumnWidth(1, 256 * 30);
+        sheet.setColumnWidth(2, 256 * 6);
+        sheet.setColumnWidth(3, 256 * 11);
+        sheet.setColumnWidth(4, 256 * 7);
+
+        HSSFRow row = sheet.createRow(0);
+        row.createCell(0).setCellValue("Users statistics");
+
+        HSSFRow header = sheet.createRow(1);
 
         setXlsHeaders(header, style, "Id", "Full Name", "Open", "In progress", "Closed");
 
-        int rowCount = 1;
+        int rowCount = 2;
 
         for (UserStatisticDTO usersData: data) {
             HSSFRow aRow = sheet.createRow(rowCount++);

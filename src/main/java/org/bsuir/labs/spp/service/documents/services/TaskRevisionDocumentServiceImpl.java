@@ -59,14 +59,14 @@ public class TaskRevisionDocumentServiceImpl extends BaseDocumentService impleme
             PdfWriter writer = preparePdfGenerating("Task statistics", response, lock, "UpdateAt", "Name", "Description", "Status", "Priority", "Sprint", "Project", "Assignee");
 
             for (TaskRevisionStatisticDTO taskRevisionData: data) {
-                this.pdfTable.addCell(String.valueOf(taskRevisionData.getUpdateAt()));
-                this.pdfTable.addCell(taskRevisionData.getName());
-                this.pdfTable.addCell(taskRevisionData.getDescription());
-                this.pdfTable.addCell(String.valueOf(taskRevisionData.getStatus()));
-                this.pdfTable.addCell(String.valueOf(taskRevisionData.getPriority()));
-                this.pdfTable.addCell(taskRevisionData.getSprint());
-                this.pdfTable.addCell(taskRevisionData.getProject());
-                this.pdfTable.addCell(taskRevisionData.getAssignee());
+                this.addCell(String.valueOf(taskRevisionData.getUpdateAt()));
+                this.addCell(taskRevisionData.getName());
+                this.addCell(taskRevisionData.getDescription());
+                this.addCell(String.valueOf(taskRevisionData.getStatus()));
+                this.addCell(String.valueOf(taskRevisionData.getPriority()));
+                this.addCell(taskRevisionData.getSprint());
+                this.addCell(taskRevisionData.getProject());
+                this.addCell(taskRevisionData.getAssignee());
             }
 
             finishPdfGenerating();
@@ -97,22 +97,37 @@ public class TaskRevisionDocumentServiceImpl extends BaseDocumentService impleme
         font.setColor(HSSFColor.WHITE.index);
         style.setFont(font);
 
-        HSSFRow header = sheet.createRow(0);
+        CellStyle wrapStyle = workbook.createCellStyle();
+        wrapStyle.setWrapText(true);
 
-        setXlsHeaders(header, style, "UpdateAt", "Name", "Description", "Status", "Priority", "Sprint", "Project", "Assignee");
+        sheet.setColumnWidth(0, 256 * 20);
+        sheet.setColumnWidth(1, 256 * 25);
+        sheet.setColumnWidth(2, 256 * 12);
+        sheet.setColumnWidth(3, 256 * 8);
+        sheet.setColumnWidth(4, 256 * 10);
+        sheet.setColumnWidth(5, 256 * 10);
+        sheet.setColumnWidth(6, 256 * 10);
 
-        int rowCount = 1;
+
+        HSSFRow row = sheet.createRow(0);
+        row.createCell(0).setCellValue("Task statistics");
+
+
+        HSSFRow header = sheet.createRow(1);
+
+        setXlsHeaders(header, style, "UpdateAt", "Name", "Status", "Priority", "Sprint", "Project", "Assignee");
+
+        int rowCount = 2;
 
         for (TaskRevisionStatisticDTO taskRevisionData: data) {
             HSSFRow aRow = sheet.createRow(rowCount++);
             aRow.createCell(0).setCellValue(String.valueOf(taskRevisionData.getUpdateAt()));
             aRow.createCell(1).setCellValue(taskRevisionData.getName());
-            aRow.createCell(2).setCellValue(taskRevisionData.getDescription());
-            aRow.createCell(3).setCellValue(String.valueOf(taskRevisionData.getStatus()));
-            aRow.createCell(4).setCellValue(String.valueOf(taskRevisionData.getPriority()));
-            aRow.createCell(5).setCellValue(taskRevisionData.getSprint());
-            aRow.createCell(6).setCellValue(taskRevisionData.getProject());
-            aRow.createCell(7).setCellValue(taskRevisionData.getAssignee());
+            aRow.createCell(2).setCellValue(String.valueOf(taskRevisionData.getStatus()));
+            aRow.createCell(3).setCellValue(String.valueOf(taskRevisionData.getPriority()));
+            aRow.createCell(4).setCellValue(taskRevisionData.getSprint());
+            aRow.createCell(5).setCellValue(taskRevisionData.getProject());
+            aRow.createCell(6).setCellValue(taskRevisionData.getAssignee());
         } try {
             workbook.write(response.getOutputStream());
         }

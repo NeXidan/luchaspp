@@ -19,7 +19,6 @@
             <thead>
             <tr>
             <th><span>Name</span></th>
-            <th><span>Description</span></th>
             <th><span>Status</span></th>
             <th><span>Priority</span></th>
             <th><span>Parent Task</span></th>
@@ -33,7 +32,6 @@
             <tbody>
             <tr *ngFor="let task of tasks ;trackBy: trackId">
                 <td><a [routerLink]="['/task', task.id ]">{{task.name}}</a></td>
-                <td>{{task.description}}</td>
                 <td>{{task.status}}</td>
                 <td>{{task.priority}}</td>
                 <td>
@@ -77,7 +75,7 @@
             </tbody>
         </table>
     </div>
-        <div *ngIf="tasks && tasks.length">
+        <div *ngIf="tasks && tasks.length && totalItems > itemsPerPage">
             <div class="row justify-content-center">
                 <app-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></app-item-count>
             </div>
